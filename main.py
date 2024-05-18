@@ -2,6 +2,7 @@ from collections import UserDict
 from datetime import datetime, timedelta
 import re
 from functools import wraps
+import pickle
 
 class Field:
     def __init__(self, value: str):
@@ -218,14 +219,26 @@ def birthdays(book: AddressBook):
         return "No BD"
     return record
 
+def save_data(book, filename="addressbook.pkl"):
+    with open(filename, "wb") as f:
+        pickle.dump(book, f)
+
+def load_data(filename="addressbook.pkl"):
+    try:
+        with open(filename, "rb") as f:
+            return pickle.load(f)
+    except FileNotFoundError:
+        return AddressBook()  # Повернення нової адресної книги, якщо файл не знайдено
 
 def main():
     book = AddressBook()
     print("Welcome to the assistant bot!")
+    book = load_data()
     while True:
         user_input = input("Enter a command: ")
         command, *args = parse_input(user_input)
         if command in ["close", "exit"]:
+            save_data(book)
             print("Good bye!")
             break
         elif command == "hello":
