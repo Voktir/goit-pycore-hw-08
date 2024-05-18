@@ -231,9 +231,9 @@ def load_data(filename="addressbook.pkl"):
         return AddressBook()  # Повернення нової адресної книги, якщо файл не знайдено
 
 def main():
-    book = AddressBook()
-    print("Welcome to the assistant bot!")
+    # book = AddressBook()
     book = load_data()
+    print("Welcome to the assistant bot!")
     while True:
         user_input = input("Enter a command: ")
         command, *args = parse_input(user_input)
