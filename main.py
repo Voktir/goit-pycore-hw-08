@@ -102,7 +102,7 @@ class AddressBook(UserDict):
             return
         self.data.pop(del_record)
 
-    def get_upcoming_birthdays(self):    
+    def get_upcoming_birthdays(self, shift: int):    
 
         today = datetime.today()
         b_users = []
@@ -113,7 +113,10 @@ class AddressBook(UserDict):
             user_data = str(user.birthday.value)
             last_birthday = re.sub(user_year, year_now, user_data)
             last_birthday_to_data = datetime.strptime(last_birthday, "%Y-%m-%d")
-            if -1 <= (last_birthday_to_data - today).days < 6:
+            print(today)
+            print(last_birthday_to_data)
+            print((last_birthday_to_data - today).days)
+            if (-1 + shift) <= (last_birthday_to_data - today).days < (6 + shift):
 
                 match last_birthday_to_data.weekday():
                     case 5:
@@ -213,8 +216,9 @@ def show_birthday(args, book: AddressBook):
     return record.birthday
 
 @input_error
-def birthdays(book: AddressBook):
-    record = book.get_upcoming_birthdays()
+def birthdays(args, book: AddressBook):
+    shift = int(''.join(map(str, args)))
+    record = book.get_upcoming_birthdays(shift)
     if record is None:        
         return "No BD"
     return record
@@ -258,7 +262,7 @@ def main():
             print(show_birthday(args, book))
 
         elif command == "birthdays":
-            print(birthdays(book))
+            print(birthdays(args, book))
 
         else:
             print("Invalid command.")
