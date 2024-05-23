@@ -109,13 +109,10 @@ class AddressBook(UserDict):
 
         for name, user in self.data.items():
             user_year = str(user.birthday.value.year)
-            year_now = str(today.year)
+            year_now = str((today+timedelta(days=shift+7)).year)
             user_data = str(user.birthday.value)
             last_birthday = re.sub(user_year, year_now, user_data)
             last_birthday_to_data = datetime.strptime(last_birthday, "%Y-%m-%d")
-            print(today)
-            print(last_birthday_to_data)
-            print((last_birthday_to_data - today).days)
             if (-1 + shift) <= (last_birthday_to_data - today).days < (6 + shift):
 
                 match last_birthday_to_data.weekday():
