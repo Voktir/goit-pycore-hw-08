@@ -1,11 +1,6 @@
-import re
+depth_days = int(input("Enter a depth_days: "))
 
-text = "Моя електронна адреса: example@example.com"
-pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
-match = re.search(pattern, text)
 
-if match:
-    print("Електронна адреса:", match.group())
-    print("Valid Email")
-else:
-    print("Invalid Email")
+
+for iter_day in range(x, y+1):
+    print(iter_day)
